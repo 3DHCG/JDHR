@@ -75,6 +75,9 @@ class VolumetricVideoRunner:  # a plain and simple object controlling the traini
                  test_amp_cached: bool = True,
                  train_use_amp: bool = False,
                  test_use_amp: bool = False,
+                 use_jit_trace: bool = False,  # almost will never work
+                 use_jit_script: bool = False,  # almost will never work
+                 use_torch_compile: bool = False,  # almost will never work
 
                  # Debugging
                  collect_timing: bool = False,  # will lose 1 fps over copying
