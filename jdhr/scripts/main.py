@@ -112,25 +112,26 @@ def gui(
 @callable_from_cfg
 def test(
     model_cfg: dotdict = dotdict(type="VolumetricVideoModel"),
-    val_dataloader_cfg: dotdict = dotdict(
-        type="VolumetricVideoDataloader",
-        max_iter=-1,
-        sampler_cfg=dotdict(
-            type="SequentialSampler",  # changed type
-        ),
-        dataset_cfg=dotdict(
-            type="VolumetricVideoDataset",  # TODO: not overwritting, repeated
-            split=DataSplit.VAL.name,
-            ratio=0.25,  # faster visualization
-        ),
-    ),
+    val_dataset_cfg: dotdict = dotdict(type="VolumetricVideoDataset",split=DataSplit.VAL.name,ratio=0.25),
+    #val_dataloader_cfg: dotdict = dotdict(
+    #    type="VolumetricVideoDataloader",
+    #    max_iter=-1,
+    #    sampler_cfg=dotdict(
+    #        type="SequentialSampler",  # changed type
+    #    ),
+    #    dataset_cfg=dotdict(
+    #        type="VolumetricVideoDataset",  # TODO: not overwritting, repeated
+    #        split=DataSplit.VAL.name,
+    #        ratio=0.25,  # faster visualization
+    #    ),
+    #),
     runner_cfg: dotdict = dotdict(type="VolumetricVideoRunner",
                                   optimizer_cfg=dotdict(type=None),
                                   scheduler_cfg=dotdict(type=None),
                                   ),
 
     # Reproducibility configuration
-    base_device: str = 'cuda',
+    #base_device: str = 'cuda',
 
     record_images_to_tb: bool = False,  # MARK: insider config # this is slow
     print_test_progress: bool = True,  # MARK: insider config # this is slow
@@ -141,18 +142,18 @@ def test(
     preflight(**kwargs)  # whether to be deterministic throughout the whole training process?
 
     # Construct other parts of the training process
-    val_dataloader: "VolumetricVideoDataloader" = DATALOADERS.build(val_dataloader_cfg)  # reuse the validataion
+    val_dataset: "VolumetricVideoDataset" = DATASETS.build(val_dataset_cfg).set_attrs(num_workers=32,batch_size=1, shuffle=False,drop_last=True,keep_numpy_array=True)  # reuse the validataion
 
     model: "VolumetricVideoModel" = MODELS.build(model_cfg)
-    model = model.to(base_device, non_blocking=True)
+    model = model.cuda()
 
     runner: "VolumetricVideoRunner" = RUNNERS.build(runner_cfg,
                                                     model=model,
-                                                    dataloader=None,  # no training dataloader
+                                                    dataset=None,  # no training dataloader
                                                     test_only=True,  # no training
                                                     record_images_to_tb=record_images_to_tb,  # another default
                                                     print_test_progress=print_test_progress,  # another default
-                                                    val_dataloader=val_dataloader)
+                                                    val_dataset=val_dataset)
 
     if dry_run: return runner  # just construct everything, then return
 
