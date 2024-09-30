@@ -8,7 +8,7 @@ JDHR (Jittor-based Dynamic Human Rendering) is a dynamic human rendering algorit
 
 ## Plan (开源计划)
 - [x] **Release training code**
-- [ ] **Release realtime rendering code**
+- [ ] **Release high frame rate(HFR) realtime rendering code**
 - [ ] **Release initializing point clouds code**
 - [ ] **Build a  WebSocket-based viewer**
 
@@ -30,6 +30,11 @@ cmake .. -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CUDA_ARCHITECTURES=86(根据显卡版�
 make -j4
 ```
 
+Download the lpips weights from the Google Drive Link and put the weights into `jdhr/utils/lpips/weights/`.
+
+Link: https://drive.google.com/drive/folders/1cTbrSl5M-7CNNDr0iJVgtRYSVrR3f4xb?usp=sharing
+
+
 ## Datasets（数据集）
 
 ### DNA-Rendering Datasets
@@ -44,16 +49,18 @@ Note that you should cite the corresponding papers if you use these datasets.
 This script trains a single-frame version on the first frame of the *0013_09* sequence of the *DNA-Rendering* dataset. You can quickly verify whether your dataset preparation and installation process are correct.
 
 ```shell
-evc-train -c configs/exps/4k4d/4k4d_0013_09_r4.yaml,configs/specs/static.yaml,configs/specs/tiny.yaml exp_name=4k4d_0013_09_r4_static
+evc-train -c configs/exps/jdhr/jdhr_0013_09_r4.yaml,configs/specs/static.yaml,configs/specs/tiny.yaml exp_name=jdhr_0013_09_r4_static
 ```
 
 The actual training of the full model is more straight forward:
 
 ```shell
-evc-train -c configs/exps/4k4d/4k4d_0013_09_r4.yaml
+evc-train -c configs/exps/jdhr/jdhr_0013_09_r4.yaml
 ```
 
-## :clock3:Rendering（渲染）
+During the validation phase, rendering frame rate should be greater than 30 FPS
+
+## :clock3:HFR Rendering（渲染）
 
 ## Team （团队）
 
