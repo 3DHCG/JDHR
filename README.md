@@ -49,13 +49,13 @@ Note that you should cite the corresponding papers if you use these datasets.
 This script trains a single-frame version on the first frame of the *0013_09* sequence of the *DNA-Rendering* dataset. You can quickly verify whether your dataset preparation and installation process are correct.
 
 ```shell
-evc-train -c configs/exps/jdhr/jdhr_0013_09_r4.yaml,configs/specs/static.yaml,configs/specs/tiny.yaml exp_name=jdhr_0013_09_r4_static
+jdhr-train -c configs/exps/jdhr/jdhr_0013_09_r4.yaml,configs/specs/static.yaml,configs/specs/tiny.yaml exp_name=jdhr_0013_09_r4_static
 ```
 
 The actual training of the full model is more straight forward:
 
 ```shell
-evc-train -c configs/exps/jdhr/jdhr_0013_09_r4.yaml
+jdhr-train -c configs/exps/jdhr/jdhr_0013_09_r4.yaml
 ```
 
 During the validation phase, rendering frame rate should be greater than 30 FPS
