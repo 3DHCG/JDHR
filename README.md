@@ -16,6 +16,12 @@ JDHR (Jittor-based Dynamic Human Rendering) is a dynamic human rendering algorit
 
 ## Installation（安装）
 
+### 1. Requirements
+- **An NVIDIA GPU**. All shown results come from an RTX 3090.
+-  **Python**. python 3.9 is recommended.
+-  **Jittor**. Refer to [link](https://github.com/Jittor/jittor) to install jittor as recommended.
+
+### 2. Install other dependencies 
 Install the basic environment under the JDHR repo:
 
 ```shell
