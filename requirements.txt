@@ -9,3 +9,25 @@ PyMCubes
 trimesh
 plyfile
 open3d
+av
+pdbr
+h5py
+yapf
+ujson
+regex; sys_platform=='win32'
+PyGLM
+scipy
+addict
+PyYaml
+ipython
+PyMCubes
+pypiwin32; sys_platform=='win32'
+pyperclip
+pyntcloud
+websockets
+PyTurboJPEG
+tensorboard
+ruamel.yaml
+cuda-python; sys_platform!='darwin'
+scikit-image
+opencv-python
