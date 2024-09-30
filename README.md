@@ -58,6 +58,13 @@ The actual training of the full model is more straight forward:
 jdhr-train -c configs/exps/jdhr/jdhr_0013_09_r4.yaml
 ```
 
+## Test（测试）
+
+To test the full model:
+
+```shell
+jdhr-test -c configs/exps/jdhr/jdhr_0013_09_r4.yaml
+```
 During the validation phase, rendering frame rate should be greater than 30 FPS
 
 ## :clock3:HFR Rendering（高帧率渲染）
