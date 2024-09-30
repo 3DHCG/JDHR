@@ -39,7 +39,7 @@ Note that you should cite the corresponding papers if you use these datasets.
 
 ### :clock3: more datasets
 
-## training（训练）
+## Training（训练）
 
 This script trains a single-frame version on the first frame of the *0013_09* sequence of the *DNA-Rendering* dataset. You can quickly verify whether your dataset preparation and installation process are correct.
 
