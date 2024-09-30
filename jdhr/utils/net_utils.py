@@ -316,7 +316,7 @@ def load_pretrained(model_dir: str, resume: bool = True, epoch: int = -1, ext: s
     else:
         model_path = model_dir
 
-    if ext == '.pt' or ext == '.pth':
+    if ext == '.ckpt' or ext == '.pth':
         pretrained = dotdict(jt.load(model_path))
     else:
         from jdhr.utils.data_utils import to_tensor
@@ -397,7 +397,7 @@ def load_network(
                                                  remove_if_not_resuming=False,
                                                  warn_if_not_exist=False)
     if pretrained is None:
-        pretrained, model_path = load_pretrained(model_dir, resume, epoch, '.pt',
+        pretrained, model_path = load_pretrained(model_dir, resume, epoch, '.ckpt',
                                                  remove_if_not_resuming=False,
                                                  warn_if_not_exist=resume)
     if pretrained is None:
@@ -438,7 +438,7 @@ def load_network(
             last_name = chain[-1]
             setattr(model_parent, last_name, nn.Parameter(pretrained_parent[last_name], requires_grad=getattr(model_parent, last_name).requires_grad))  # just replace without copying
 
-    (model).load_state_dict(pretrained_model, strict=strict)#if not isinstance(model, DDP) else model.module
+    (model).load_state_dict(pretrained_model)#if not isinstance(model, DDP) else model.module
     log(f'Loaded network {blue(model_path)} at epoch {blue(pretrained["epoch"])}')
     return pretrained["epoch"] + 1
 
