@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jdhr"
+version = "0.0.0"
+description = "JDHR: Jittor based Dynamic Human Rendering"
+readme = "readme.md"
+license = { file = "license" }
+requires-python = ">=3.9"
+dynamic = ["dependencies", "optional-dependencies"]
+
+[project.urls]
+homepage = "https://github.com/3DHCG/JDHR"
+
+[tool.setuptools]
+# Automatic finding of packages is too slow due to symlink to large datasets (tons of images)
+# It's never just runtime speed, we'd like the overall user experiment to be smooth
+# Including the process of creating commandline interfaces
+packages = [
+    'jdhr',
+    'jdhr.engine',
+    'jdhr.engine.handlers',
+    'jdhr.dataloaders',
+    'jdhr.dataloaders.datasets',
+    'jdhr.models',
+    'jdhr.models.networks',
+    'jdhr.models.networks.regressors',
+    'jdhr.models.networks.embedders',
+    'jdhr.models.samplers',
+    'jdhr.models.renderers',
+    'jdhr.models.supervisors',
+    'jdhr.runners',
+    'jdhr.runners.evaluators',
+    'jdhr.runners.visualizers',
+    'jdhr.utils',
+    'jdhr.utils.shaders',
+    'jdhr.scripts',
+]
+
+# [tool.setuptools.packages.find]
+# include = ["jdhr*", "scripts*", "main.py"]
+# exclude = ["data"]
+# where = ["jdhr", "scripts", "main.py"]
+
+[tool.setuptools.package-data]
+"*" = [
+    "*.yaml",
+    "*.json",
+    "*.py",
+    "*.yml",
+
+    "*.frag",
+    "*.vert",
+    "*.glsl",
+] # yes, .py not needed here, but just for clarification that you can use py for config
+
+[project.scripts]
+evc = "jdhr.scripts.wrap:main_entrypoint"
+evc-test = "jdhr.scripts.wrap:test_entrypoint"
+evc-train = "jhdr.scripts.wrap:train_entrypoint"
+
+evc-ws = "jdhr.scripts.wrap:ws_entrypoint"
+evc-gui = "jdhr.scripts.wrap:gui_entrypoint"
+evc-dist = "jdhr.scripts.wrap:dist_entrypoint"
+evc-prof = "jdhr.scripts.wrap:prof_entrypoint"
+
+# This should only serve as a commanline registration
+# Dependencies are expected to be installed separatedly
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+# NOTE: Somehow, installing with pip install -e ".[dev]" will cause pip to try to install other packages with the dev feature as well..
+# Like running: pip install mediapipe[dev], however such feature doesn't exist in mediapipe, thus the installation fails
+# So we opted to change the name for a full development install from "dev" to "devel"
+# optional-dependencies = { dev = { file = ["requirements-devel.txt"] } }
+#optional-dependencies = { devel = { file = ["requirements-devel.txt"] } }
