@@ -2,9 +2,11 @@
 
 ## Introduction (介绍)
 
-JDHR是一个基于Jittor国产深度学习框架的动态人体渲染算法库。该算法库全面集成了动态人体渲染(![如图所示](https://github.com/3DHCG/JDHR/blob/main/demo.mp4))的关键技术，包括点云采样、4D特征网格表示以及实时渲染等多个关键模块。
+JDHR是一个基于Jittor国产深度学习框架的动态人体渲染算法库。该算法库全面集成了动态人体渲染的关键技术，包括点云采样、4D特征网格表示以及实时渲染等多个关键模块。
 
 JDHR (Jittor-based Dynamic Human Rendering) is a dynamic human rendering algorithm library based on Jittor. This algorithm library fully integrates key technologies, including point cloud sampling, 4D feature grid representation, and real-time rendering.
+
+(![动态人体渲染示例](https://github.com/3DHCG/JDHR/blob/main/demo.gif))
 
 ## Plan (开源计划)
 - [x] **Release training code**
