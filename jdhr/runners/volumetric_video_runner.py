@@ -78,7 +78,8 @@ class VolumetricVideoRunner:  # a plain and simple object controlling the traini
                  use_jit_trace: bool = False,  # almost will never work
                  use_jit_script: bool = False,  # almost will never work
                  use_torch_compile: bool = False,  # almost will never work
-
+                 #  torch_compile_mode: str = None,
+                 torch_compile_mode: str = 'max-autotune-no-cudagraphs',
                  # Debugging
                  collect_timing: bool = False,  # will lose 1 fps over copying
                  timer_sync_cuda: bool = True,  # will explicitly call torch.cuda.synchronize() before collecting
