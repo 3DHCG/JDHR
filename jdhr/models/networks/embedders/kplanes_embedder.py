@@ -12,7 +12,6 @@ from jdhr.utils.net_utils import make_buffer, make_params
 from jdhr.models.cameras.optimizable_camera import OptimizableCamera
 from jdhr.models.networks.embedders.encoding import MultiResHashGrid
 from jdhr.models.networks.embedders.hash_embedder import HashEmbedder
-from jdhr.models.networks.embedders.tcnn_hash_embedder import TcnnHashEmbedder
 
 
 @EMBEDDERS.register_module()
