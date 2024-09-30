@@ -71,11 +71,9 @@ During the validation phase, rendering frame rate should be greater than 30 FPS
 
 ## Team （团队）
 
-动态人体渲染算法库（JDHR）是由清华大学和北京交通大学团队共同维护的开源代码库。欢迎大家使用JDHR开展研究工作。
+动态人体渲染算法库（JDHR）是由清华大学刘永进教授团队和北京交通大学温玉辉副教授、景丽萍教授团队共同维护的开源代码库。
 
 JDHR is an open-source code repository jointly maintained by teams from Tsinghua University and Beijing Jiaotong University
-
-Feel free to request support for new models and contribute to JDHR.
 
 
 ## Acknowledgement (鸣谢)
