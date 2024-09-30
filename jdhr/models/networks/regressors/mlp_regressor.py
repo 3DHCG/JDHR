@@ -6,7 +6,6 @@ from jdhr.engine import REGRESSORS
 from jdhr.utils.console_utils import *
 from jdhr.utils.net_utils import MLP, get_function
 from jdhr.utils.base_utils import dotdict
-from jdhr.models.networks.regressors.tcnn_mlp_regressor import TcnnMlpRegressor
 
 
 @REGRESSORS.register_module()
