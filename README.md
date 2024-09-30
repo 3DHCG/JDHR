@@ -24,7 +24,7 @@ pip install -v -e .
 Install Rasterizer for realtime rendering:
 
 ```shell
-cd easyvolcap/diff_point_rasterizater
+cd jdhr/diff_point_rasterizater
 mkdir build && cd build
 cmake .. -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CUDA_ARCHITECTURES=86(根据显卡版本选用70.75.86)
 make -j4
