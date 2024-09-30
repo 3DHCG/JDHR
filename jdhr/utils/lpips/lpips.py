@@ -105,7 +105,6 @@ class LPIPS(nn.Module):
 
         self.net = net_type(pretrained=not self.pnet_rand, requires_grad=self.pnet_tune)
 
-        #print("dfsdkflksd",lpips)
         if(lpips):
             self.lin0 = NetLinLayer(self.chns[0], use_dropout=use_dropout)
             self.lin1 = NetLinLayer(self.chns[1], use_dropout=use_dropout)
@@ -119,14 +118,12 @@ class LPIPS(nn.Module):
                 self.lins+=[self.lin5,self.lin6]
             self.lins = nn.ModuleList(self.lins)
 
-            #print("uiuiuiu")
             if(pretrained):
-                #print("lplplplp")
+                
                 if(model_path is None):
-                    #print("jijiooo")
-                    model_path = '/data2/zhouzz/4K4D-jittor-test/jdhr/utils/lpips/weights/jt_lpips_%s_v01.pkl'%net
-                #if(verbose):
-                #    print('Loading model from: %s'%model_path)
+                    
+                    model_path = '/data2/zhouzz/JDHR/jdhr/utils/lpips/weights/jt_lpips_%s_v01.pkl'%net
+              
                 model_dict = jt.load(model_path)
                 self.load_state_dict(model_dict)
 
