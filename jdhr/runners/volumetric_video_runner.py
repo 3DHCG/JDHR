@@ -283,13 +283,13 @@ class VolumetricVideoRunner:  # a plain and simple object controlling the traini
                 jt.gc()
 
             # Saving stuff to disk
-            if (epoch + 1) % self.save_ep == 0 and not jt.rank:
-                try:
-                    self.save_model(epoch, latest=False)
-                except Exception as e:
-                    log(red('Error in model saving, ignored and continuing'))
-                    stacktrace()
-                    stop_prog()  # stop it, otherwise multiple lives
+            #if (epoch + 1) % self.save_ep == 0 and not jt.rank:   #no need
+            #    try:
+            #        self.save_model(epoch, latest=False)
+            #    except Exception as e:
+            #        log(red('Error in model saving, ignored and continuing'))
+            #        stacktrace()
+            #        stop_prog()  # stop it, otherwise multiple lives
 
             if (epoch + 1) % self.save_latest_ep == 0 and not jt.rank:
                 try:
