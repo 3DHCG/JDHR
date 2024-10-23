@@ -151,15 +151,15 @@ class PointPlanesSampler(VolumetricVideoModule):
         make_params_or_buffer = make_params if opt_pcd else make_buffer
 
         # Some initialization possibility
-        self.pcds: nn.ParameterList[jt.Var] = nn.ParameterList()#nn.ParameterDict[nn.Parameter] = nn.ParameterDict()
+        self.pcds = jt.array(jt.zeros([n_frames,n_points,3]))
+        self.pcds.requires_grad=True
         self.rgbs: List[jt.Var] = []
         self.nors: List[jt.Var] = []
         self.rads: List[jt.Var] = []
         self.occs: List[jt.Var] = []
 
         if skip_loading_points:
-            for i in range(n_frames):
-                self.pcds.append(jt.rand(n_points, 3))#make_params_or_buffer
+            pass
         else:
             data_root = OptimizableCamera.data_root
             points_dir = OptimizableCamera.vhulls_dir
