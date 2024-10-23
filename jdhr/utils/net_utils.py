@@ -316,7 +316,7 @@ def load_pretrained(model_dir: str, resume: bool = True, epoch: int = -1, ext: s
     else:
         model_path = model_dir
 
-    if ext == '.ckpt' or ext == '.pth':
+    if ext == '.pkl' or ext == '.pth':
         pretrained = dotdict(jt.load(model_path))
     else:
         from jdhr.utils.data_utils import to_tensor
@@ -341,7 +341,7 @@ def load_model(
     allow_mismatch: List[str] = [],
 ):
 
-    pretrained, model_path = load_pretrained(model_dir, resume, epoch, '.pt',
+    pretrained, model_path = load_pretrained(model_dir, resume, epoch, '.pkl',
                                              remove_if_not_resuming=True,
                                              warn_if_not_exist=False)
     if pretrained is None: return 0
@@ -370,7 +370,7 @@ def load_model(
             last_name = chain[-1]
             setattr(model_parent, last_name, nn.Parameter(pretrained_parent[last_name], requires_grad=getattr(model_parent, last_name).requires_grad))  # just replace without copying
 
-    (model ).load_state_dict(pretrained_model, strict=strict)#if not isinstance(model, DDP) else model.module
+    (model).load_state_dict(pretrained_model)
     if optimizer is not None and 'optimizer' in pretrained.keys(): optimizer.load_state_dict(pretrained['optimizer'])
     if scheduler is not None and 'scheduler' in pretrained.keys(): scheduler.load_state_dict(pretrained['scheduler'])
     if moderator is not None and 'moderator' in pretrained.keys(): moderator.load_state_dict(pretrained['moderator'])
@@ -397,7 +397,7 @@ def load_network(
                                                  remove_if_not_resuming=False,
                                                  warn_if_not_exist=False)
     if pretrained is None:
-        pretrained, model_path = load_pretrained(model_dir, resume, epoch, '.ckpt',
+        pretrained, model_path = load_pretrained(model_dir, resume, epoch, '.pkl',
                                                  remove_if_not_resuming=False,
                                                  warn_if_not_exist=resume)
     if pretrained is None:
@@ -477,7 +477,8 @@ def save_model(model: nn.Module,
     if optimizer is not None:
         model['optimizer'] = optimizer.state_dict()
 
-    #if scheduler is not None:
+    if scheduler is not None:
+        pass
     #    model['scheduler'] = scheduler.state_dict()
 
     if moderator is not None:
@@ -486,19 +487,19 @@ def save_model(model: nn.Module,
     if not os.path.exists(model_dir):
         os.makedirs(model_dir, exist_ok=True)
 
-    model_path = join(model_dir, 'latest.ckpt' if latest else f'{epoch}.ckpt')
+    model_path = join(model_dir, 'latest.pkl' if latest else f'{epoch}.pkl')
     #print("model",model,model_path)
     jt.save(model, model_path)
     log(yellow(f'Saved model {blue(model_path)} at epoch {blue(epoch)}'))
 
-    ext = '.ckpt'
+    ext = '.pkl'
     pts = [
         int(pt.split('.')[0]) for pt in os.listdir(model_dir) if pt != f'latest{ext}' and pt.endswith(ext) and pt.split('.')[0].isnumeric()
     ]
     if len(pts) <= save_lim:
         return
     else:
-        removing = join(model_dir, f"{min(pts)}.ckpt")
+        removing = join(model_dir, f"{min(pts)}.pkl")
         # log(red(f"Removing trained weights: {blue(removing)}"))
         os.remove(removing)
 
