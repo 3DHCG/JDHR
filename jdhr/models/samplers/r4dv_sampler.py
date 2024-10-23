@@ -10,7 +10,7 @@ from types import MethodType
 from jdhr.utils.console_utils import *
 from jdhr.utils.sh_utils import eval_sh
 from jdhr.utils.timer_utils import timer
-from jdhr.utils.math_utils import normalize
+from jdhr.utils.math_utils import normalize, affine_inverse, affine_padding, point_padding
 from jdhr.utils.net_utils import make_params, make_buffer
 
 from jdhr.engine import cfg
@@ -27,7 +27,12 @@ from jdhr.models.networks.embedders.positional_encoding_embedder import Position
 from jdhr.models.networks.embedders.geometry_image_based_embedder import GeometryImageBasedEmbedder
 from jdhr.models.networks.regressors.image_based_spherical_harmonics import ImageBasedSphericalHarmonics
 
-
+def align_points(pcd: jt.Var,c2w_avg:jt.Var):  # B, N, 3
+    pcd_new = point_padding(pcd) @ affine_inverse(affine_padding(c2w_avg)).transpose(-2,-1)  # this might be affected by amp
+    pcd_new = pcd_new.type_as(pcd)
+    pcd_new = pcd_new[..., :3] / pcd_new[..., 3:]
+    return pcd_new
+    
 @SAMPLERS.register_module()
 class R4DVSampler(PointPlanesSampler):
     def __init__(self,
@@ -119,10 +124,14 @@ class R4DVSampler(PointPlanesSampler):
     def execute(self, batch: dotdict, return_frags: bool = False):
         timer.record('post processing')
 
-        self.init_points(batch)
-        self.update_points(batch)
+        #self.init_points(batch)
+       
         pcd, pcd_t = self.sample_pcd_pcd_t(batch)  # B, P, 3, B, P, 1
-
+        
+        c2w_avg=jt.array(cfg.runner.val_dataset.c2w_avg)
+        
+        pcd=align_points(pcd,c2w_avg) 
+        
         pcd_feat = self.pcd_embedder(pcd, pcd_t)  # B, N, C
 
         resd = self.resd_regressor(pcd_feat)  # B, N, 3
