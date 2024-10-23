@@ -322,6 +322,8 @@ class VolumetricVideoRunner:  # a plain and simple object controlling the traini
         epoch = begin_epoch  # set starting epoch
 
         self.model.train()  # set the network (model) to training mode (recursive to all modules)
+        for k, v in self.model.named_parameters():
+            v.requires_grad=True
         start_time = time.perf_counter()
         for index, batch in enumerate(self.dataset):  # control number of iterations explicitly
             iter = begin_epoch * self.ep_iter + index  # epoch actually is only for logging here
@@ -345,11 +347,11 @@ class VolumetricVideoRunner:  # a plain and simple object controlling the traini
             if hasattr(self.model, 'decorate_grad'): self.model.decorate_grad(self, batch)  # perform some action on the gradients
             elif hasattr(self.model, 'module') and hasattr(self.model.module, 'decorate_grad'): self.model.module.decorate_grad(self, batch)  # perform some action on the gradients
 
-            jt.sync_all()
+            
             self.optimizer.step(loss)
             self.scheduler.step()
             self.moderator.step()
-            jt.sync_all()
+            
             timer.record('optimization step')
 
             # Records data and batch forwarding time
