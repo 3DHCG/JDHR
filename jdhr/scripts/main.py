@@ -145,7 +145,7 @@ def test(
     val_dataset: "VolumetricVideoDataset" = DATASETS.build(val_dataset_cfg).set_attrs(num_workers=32,batch_size=1, shuffle=False,drop_last=True,keep_numpy_array=True)  # reuse the validataion
 
     model: "VolumetricVideoModel" = MODELS.build(model_cfg)
-    model = model.cuda()
+    #model = model.cuda()
 
     runner: "VolumetricVideoRunner" = RUNNERS.build(runner_cfg,
                                                     model=model,
@@ -188,7 +188,7 @@ def train(
 
     # Model building and distributed training related stuff
     model: "VolumetricVideoModel" = MODELS.build(model_cfg)  # some components are directly moved to cuda when building
-    model.cuda()# move this model to this specific device
+    #model.cuda()# move this model to this specific device
 
 
 
