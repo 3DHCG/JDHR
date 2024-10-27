@@ -46,9 +46,10 @@ def compute_camera_similarity_np(tar_c2ws, src_c2ws):
     sims = np.linalg.norm(1 / (centers_source[None] - centers_target[:, None]),axis=-1)  # N, N, L,
 
     # Source view index and there similarity
+    src_inds = (-sims).argsort(axis=1)
     src_sims = sims.sort(axis=1)  # similarity to source views # Target, Source, Latent
-    src_inds = sims.argsort(axis=1)
-    return src_sims, src_inds  # N, N, L
+    sims = np.flip(sims,axis=1)
+    return sims, src_inds  # N, N, L
 
 def compute_camera_zigzag_similarity(tar_c2ws: jt.Var, src_c2ws: jt.Var):
     # Get the camera centers
