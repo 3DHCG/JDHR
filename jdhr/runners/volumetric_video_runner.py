@@ -68,7 +68,7 @@ class VolumetricVideoRunner:  # a plain and simple object controlling the traini
                  retain_last_grad: bool = False,  # setting this to true might lead to excessive VRAM usage
                  ignore_eval_error: bool = True,  # errors in evaluation will not affect training
                  record_images_to_tb: bool = True,  # when testing, save images to tensorboard
-                 print_test_progress: bool = True,  # when testing, print a progress bar for indication
+                 print_test_progress: bool = False,  # when testing, print a progress bar for indication
                  test_using_train_mode: bool = False,  # when testing, call model.train() instead of model.eval()
                  test_using_inference_mode: bool = args.type != 'train',  # MARK: global configuration
 
@@ -422,6 +422,8 @@ class VolumetricVideoRunner:  # a plain and simple object controlling the traini
             iter = epoch * self.ep_iter - 1  # some indexing trick
             batch = add_iter(batch, iter, self.total_iter)  # is this bad naming
             batch = to_cuda(batch)  # cpu -> cuda, note that DDP will move all cpu tensors to cuda as well
+            if batch.meta.camera_index%20 != 0: # eval on every 20 cameras
+                continue
             with jt.no_grad():
                 a=time.perf_counter()
                 output: dotdict = self.model(batch)
