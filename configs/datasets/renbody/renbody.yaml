@@ -7,7 +7,7 @@ dataset_cfg: &dataset_cfg
     dist_opt_K: false # whether to resize the image so that after distortion, no black pixels will remain
     use_aligned_cameras: True # whether to move the center of the attention of the cameras to the world origin
     view_sample: [0, 60, 1] # start, end, step. 0 means the first view, null means the last view
-    frame_sample: [0, 150, 1] # start, end, step. 0 means the first frame, null means the last frame
+    frame_sample: [0, 50, 1] # start, end, step. 0 means the first frame, null means the last frame
 
 model_cfg:
     sampler_cfg:
@@ -18,11 +18,8 @@ model_cfg:
 #val_dataloader_cfg:
 val_dataset_cfg:
     <<: *dataset_cfg
-    ratio: [1.0, 1.0, 1.0]
     frame_sample: [0, 150, 30] # make rendering faster, controls which of the views and frames to load
-    view_sample: [0, 60, 20]
-sampler_cfg:
-    view_sample: [0, 60, 20] # make rendering faster, if doing IBR, change the view_sample in sampler_cfg to control which view to render
+
 
 viewer_cfg:
     use_window_focal: True # when initializing viewer, use window H and W to calculate focal to give a better experience
