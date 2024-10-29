@@ -43,7 +43,7 @@ def compute_camera_similarity_np(tar_c2ws, src_c2ws):
     centers_source = src_c2ws[..., :3, 3]  # N, L, 3
 
     # Using distance between centers for camera selection
-    sims = np.linalg.norm(1 / (centers_source[None] - centers_target[:, None]),axis=-1)  # N, N, L,
+    sims = 1/np.linalg.norm((centers_source[None] - centers_target[:, None]),axis=-1)  # N, N, L,
 
     # Source view index and there similarity
     src_inds = (-sims).argsort(axis=1)
