@@ -41,8 +41,8 @@ runner_cfg:
 
     epochs: 1600
     save_latest_ep: 20 # slow
-    empty_cache_ep: 5
-    save_ep: 20
+    #empty_cache_ep: 5
+    #save_ep: 20
     eval_ep: 10 #20
     log_interval: 10
     # train_use_amp: True # faster training available for this
