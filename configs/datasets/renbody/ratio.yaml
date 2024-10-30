@@ -10,5 +10,5 @@ dataset_cfg: &dataset_cfg
 #    <<: *dataloader_cfg
 val_dataset_cfg:
     <<: *dataset_cfg
-    frame_sample: [0, 50, 20] # eval on every 20 frames
+    frame_sample: [0, 149, 20] # eval on every 20 frames
    
