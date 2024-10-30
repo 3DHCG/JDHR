@@ -7,7 +7,7 @@ dataset_cfg: &dataset_cfg
     dist_opt_K: false # whether to resize the image so that after distortion, no black pixels will remain
     use_aligned_cameras: True # whether to move the center of the attention of the cameras to the world origin
     view_sample: [0, 60, 1] # start, end, step. 0 means the first view, null means the last view
-    frame_sample: [0, 50, 1] # start, end, step. 0 means the first frame, null means the last frame
+    frame_sample: [0, 149, 1] # start, end, step. 0 means the first frame, null means the last frame
 
 model_cfg:
     sampler_cfg:
