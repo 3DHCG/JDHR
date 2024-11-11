@@ -83,6 +83,14 @@ During the validation phase, rendering frame rate should be greater than 30 FPS
 
 JDHR is an open-source code repository jointly maintained by teams from Tsinghua University and Beijing Jiaotong University
 
+## Special thanks
+
+The project is implemented by Zhengzhong Zhou. If you have any quesion about the implementation in jittor version, feel free to contact
+
+```
+23120464@bjtu.edu.cn
+```
+
 
 ## Acknowledgement (鸣谢)
 1. [Jittor](https://github.com/Jittor/jittor)
